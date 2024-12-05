@@ -51,6 +51,9 @@ const GettingStartedPage =
             "/profile";
         }
       } catch (error) {
+        console.log(
+          error
+        );
         redirectURL =
           "/error";
       } finally {

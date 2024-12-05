@@ -20,10 +20,8 @@ import { TrashIcon } from "lucide-react";
 
 const CustomSection =
   ({
-    showTitle = true,
     fieldIdx,
   }: {
-    showTitle?: boolean;
     fieldIdx: number;
   }) => {
     const {

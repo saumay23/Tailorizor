@@ -125,7 +125,8 @@ const GeneratedResumeForm =
         );
       } catch (error) {
         console.log(
-          "error"
+          "error",
+          error
         );
         toast.error(
           "An Error Occured! Please try Again",

@@ -67,6 +67,9 @@ const Profile =
             rest;
         }
       } catch (error) {
+        console.log(
+          error
+        );
         redirectURL =
           "/error";
         profileProp =

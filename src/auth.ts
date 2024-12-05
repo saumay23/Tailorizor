@@ -1,4 +1,3 @@
-// @ts-ignore
 import NextAuth from "next-auth";
 import { authConfig } from "@/lib/auth.config";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
@@ -44,7 +43,7 @@ export const {
               user
             ) {
               token.accessToken =
-                //@ts-ignore
+                //@ts-expect-error
                 user.access_token;
 
               token.id =
@@ -58,10 +57,10 @@ export const {
             session,
             token,
           }) {
-            //@ts-ignore
+            //@ts-expect-error
             session.accessToken =
               token.accessToken;
-            //@ts-ignore
+            //@ts-expect-error
             session.user.id =
               token.id;
 

@@ -249,6 +249,9 @@ const GettingStarted =
                 5000
               );
             } catch (error) {
+              console.log(
+                error
+              );
               setSubmitting(
                 false
               );

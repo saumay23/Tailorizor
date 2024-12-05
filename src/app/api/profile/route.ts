@@ -19,45 +19,44 @@ export async function POST(
     const user_id =
       data.user_id as string;
 
-    const result =
-      await db
-        .collection(
-          "Profile"
-        )
-        .replaceOne(
-          {
+    await db
+      .collection(
+        "Profile"
+      )
+      .replaceOne(
+        {
+          user_id,
+        }, // Filter to find the document
+        {
+          ...data,
+        }, // Replace with new data
+        {
+          upsert:
+            true,
+        } // Insert if no document exists
+      );
+
+    await db
+      .collection(
+        "Resume"
+      )
+      .replaceOne(
+        {
+          user_id:
             user_id,
-          }, // Filter to find the document
-          {
-            ...data,
-          }, // Replace with new data
-          {
-            upsert:
-              true,
-          } // Insert if no document exists
-        );
-    const result2 =
-      await db
-        .collection(
-          "Resume"
-        )
-        .replaceOne(
-          {
-            user_id:
-              user_id,
-            resumeName:
-              "Default",
-          },
-          {
-            resumeName:
-              "Default",
-            ...data,
-          },
-          {
-            upsert:
-              true,
-          } // Insert if no document exists
-        );
+          resumeName:
+            "Default",
+        },
+        {
+          resumeName:
+            "Default",
+          ...data,
+        },
+        {
+          upsert:
+            true,
+        } // Insert if no document exists
+      );
     return NextResponse.json(
       {
         message:

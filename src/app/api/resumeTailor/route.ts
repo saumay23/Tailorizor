@@ -44,12 +44,6 @@ export async function POST(
       );
     }
 
-    const {
-      _id,
-      ...rest
-    } =
-      resume;
-
     // Initialize OpenAI API client
 
     const genAI =

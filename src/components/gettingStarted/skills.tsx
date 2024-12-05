@@ -1,7 +1,5 @@
 "use client";
-import React, {
-  useState,
-} from "react";
+import React from "react";
 import Editor from "../ui/rich-text/editor";
 import { useFormContext } from "react-hook-form";
 import { ProfileType } from "@/lib/types/profile";
