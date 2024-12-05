@@ -1,7 +1,9 @@
 "use client";
 import { ResumeType } from "@/lib/types/resume";
 import { renderToStaticMarkup } from "react-dom/server";
-import React from "react";
+import React, {
+  useState,
+} from "react";
 import {
   AiFillFilePdf,
   AiOutlineDownload,
@@ -10,6 +12,7 @@ import { RxCross2 } from "react-icons/rx";
 import Template1 from "./ui/template/template1";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loading from "./Loading";
 
 const DashBoardComponent =
   ({
@@ -17,6 +20,13 @@ const DashBoardComponent =
   }: {
     resumes: ResumeType[];
   }) => {
+    const [
+      isDownloading,
+      setIsDownloading,
+    ] =
+      useState<boolean>(
+        false
+      );
     const router =
       useRouter();
     const downloadResume =
@@ -31,8 +41,8 @@ const DashBoardComponent =
               }
             />
           );
-        console.log(
-          template
+        setIsDownloading(
+          true
         );
         try {
           const response =
@@ -90,6 +100,10 @@ const DashBoardComponent =
           console.error(
             "Error app generating PDF:",
             error
+          );
+        } finally {
+          setIsDownloading(
+            false
           );
         }
       };
@@ -156,14 +170,25 @@ const DashBoardComponent =
                         resume.resumeName
                       }
                     </p>
-                    <AiOutlineDownload
-                      className="w-5 h-5  cursor-pointer"
-                      onClick={() => {
-                        downloadResume(
-                          resume
-                        );
-                      }}
-                    />
+                    {isDownloading ? (
+                      <Loading
+                        size={
+                          25
+                        }
+                        displayMessage={
+                          false
+                        }
+                      />
+                    ) : (
+                      <AiOutlineDownload
+                        className="w-5 h-5  cursor-pointer"
+                        onClick={() => {
+                          downloadResume(
+                            resume
+                          );
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               );

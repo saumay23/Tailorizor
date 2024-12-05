@@ -5,6 +5,7 @@ export interface ISVGProps
   size?: number;
   className?: string;
   message?: string; // New optional message prop
+  displayMessage?: boolean;
 }
 
 const Loading =
@@ -12,6 +13,7 @@ const Loading =
     size = 24,
     className,
     message = " Loading....",
+    displayMessage = true,
     ...props
   }: ISVGProps) => {
     return (
@@ -38,11 +40,13 @@ const Loading =
         >
           <path d="M21 12a9 9 0 1 1-6.219-8.56" />
         </svg>
-        <span className="text-center font-[family-name:var(--font-arkhip-regular)] text-lg">
-          {
-            message
-          }
-        </span>
+        {displayMessage && (
+          <span className="text-center font-[family-name:var(--font-arkhip-regular)] text-lg">
+            {
+              message
+            }
+          </span>
+        )}
       </div>
     );
   };
