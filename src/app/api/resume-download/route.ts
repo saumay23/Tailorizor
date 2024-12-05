@@ -1,13 +1,22 @@
 import { NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import { chromium } from "playwright-core";
 
 async function generatePDF(
   html: string
 ): Promise<Buffer> {
   try {
-    // Launch Puppeteer
     const browser =
-      await puppeteer.launch();
+      await chromium.launch(
+        {
+          args: [
+            "--no-sandbox",
+            "--disable-setuid-sandbox",
+            "--disable-dev-shm-usage",
+          ],
+          headless:
+            true,
+        }
+      );
     const page =
       await browser.newPage();
 
@@ -16,7 +25,7 @@ async function generatePDF(
       html,
       {
         waitUntil:
-          "domcontentloaded",
+          "networkidle",
       }
     );
 
@@ -42,7 +51,7 @@ async function generatePDF(
 
     return pdfBuffer;
   } catch (error) {
-    console.error(
+    console.log(
       "Error generating PDF:",
       error
     );
