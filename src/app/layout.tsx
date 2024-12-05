@@ -7,6 +7,7 @@ import "./prose-mirror.css";
 import ClientSessionProvider from "@/lib/ClientSessionProvider";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import { Analytics } from "@vercel/analytics/react";
 
 const geistSans =
   localFont(
@@ -89,6 +90,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${arkhipRegular.variable} ${lato.variable} ${tahoma.variable} antialiased`}
       >
         <ClientSessionProvider>
+          <Analytics />
           <Suspense
             fallback={
               <div className="h-screen w-screen flex items-center justify-center">
