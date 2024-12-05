@@ -121,7 +121,7 @@ const Navbar =
                     </SheetTitle>
                   </SheetClose>
                 </Link>
-                <Link
+                {/* <Link
                   href={
                     "/coverLetter"
                   }
@@ -134,7 +134,7 @@ const Navbar =
                       </p>
                     </SheetTitle>
                   </SheetClose>
-                </Link>
+                </Link> */}
               </nav>
             </SheetContent>
           </Sheet>
@@ -157,12 +157,12 @@ const Navbar =
                     Resume
                   </span>
                 </Link>
-                <Link href="/coverLetter">
+                {/* <Link href="/coverLetter">
                   <span className="cursor-pointer transition-all hover:underline hover:scale-125 hover:font-bold ">
                     Cover
                     Letter
                   </span>
-                </Link>
+                </Link> */}
               </div>
             </nav>
           </div>
