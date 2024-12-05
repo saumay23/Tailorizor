@@ -53,6 +53,10 @@ const lato =
         "normal",
       variable:
         "--font-lato",
+      subsets:
+        [
+          "latin",
+        ],
     }
   );
 const arkhipRegular =
