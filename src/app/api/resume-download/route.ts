@@ -99,8 +99,7 @@ export async function POST(
     );
     return NextResponse.json(
       {
-        error:
-          "Failed to generate PDF",
+        error: ` Failed to generate PDF ${error}`,
       },
       {
         status: 500,

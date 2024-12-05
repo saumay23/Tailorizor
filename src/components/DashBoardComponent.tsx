@@ -58,7 +58,7 @@ const DashBoardComponent =
             !response.ok
           ) {
             throw new Error(
-              "Failed to generate PDF"
+              "Sorry Failed to generate PDF "
             );
           }
 
@@ -88,7 +88,7 @@ const DashBoardComponent =
           );
         } catch (error) {
           console.error(
-            "Error generating PDF:",
+            "Error app generating PDF:",
             error
           );
         }
