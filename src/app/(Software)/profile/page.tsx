@@ -1,12 +1,9 @@
 import { auth } from "@/auth";
-import Loading from "@/components/Loading";
 import ProfileForm from "@/components/profile/ProfileForm";
 import { connectToDatabase } from "@/lib/db";
 import { ProfileType } from "@/lib/types/profile";
 import { redirect } from "next/navigation";
-import React, {
-  Suspense,
-} from "react";
+import React from "react";
 
 const Profile =
   async () => {
@@ -61,7 +58,8 @@ const Profile =
           profile
         ) {
           const {
-            _id,
+            _id /* eslint-disable @typescript-eslint/no-unused-vars */,
+
             ...rest
           } =
             profile;
