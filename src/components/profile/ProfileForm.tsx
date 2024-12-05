@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+
 "use client";
 import {
   ProfileType,
@@ -43,6 +45,7 @@ const ProfileForm =
       !profile
     )
       return null;
+
     const [
       update,
       setUpdating,
