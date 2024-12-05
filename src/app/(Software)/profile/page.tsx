@@ -57,12 +57,16 @@ const Profile =
         if (
           profile
         ) {
+          /* eslint-disable @typescript-eslint/no-unused-vars */
+
           const {
-            _id /* eslint-disable @typescript-eslint/no-unused-vars */,
+            _id,
 
             ...rest
           } =
             profile;
+          /* eslint-disable @typescript-eslint/no-unused-vars */
+
           profileProp =
             rest;
         }

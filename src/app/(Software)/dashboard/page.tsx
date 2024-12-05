@@ -58,15 +58,17 @@ const Dashboard =
           redirectURL =
             "/gettingStarted";
         }
+        /* eslint-disable @typescript-eslint/no-unused-vars */
 
         resumeProp =
           resume?.map(
             ({
-              _id /* eslint-disable @typescript-eslint/no-unused-vars */,
+              _id,
               ...rest
             }) =>
               rest
           );
+        /* eslint-enable @typescript-eslint/no-unused-vars */
       } catch (error) {
         console.log(
           error

@@ -43,7 +43,7 @@ export const {
               user
             ) {
               token.accessToken =
-                //@ts-expect-error
+                //@ts-expect-error resolving deployment error
                 user.access_token;
 
               token.id =
@@ -57,10 +57,10 @@ export const {
             session,
             token,
           }) {
-            //@ts-expect-error
+            //@ts-expect-error resolving deployment error
             session.accessToken =
               token.accessToken;
-            //@ts-expect-error
+            //@ts-expect-error resolving deployment error
             session.user.id =
               token.id;
 
