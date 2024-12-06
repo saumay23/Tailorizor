@@ -1,20 +1,36 @@
 import { NextResponse } from "next/server";
-import { chromium } from "playwright-core";
+import puppeteer from "puppeteer-core";
+import chromium from "@sparticuz/chromium-min";
 
 async function generatePDF(
   html: string
 ): Promise<Buffer> {
   try {
+    const executablePath =
+      await chromium.executablePath(
+        "https://github.com/Sparticuz/chromium/releases/download/v110.0.1/chromium-v110.0.1-pack.tar"
+      );
+    console.log(
+      executablePath,
+      "\n\n\n\n\n\n\n"
+    );
+    if (
+      !executablePath
+    )
+      throw new Error(
+        "Executable path error"
+      );
     const browser =
-      await chromium.launch(
+      await puppeteer.launch(
         {
+          executablePath,
           args: [
             "--no-sandbox",
             "--disable-setuid-sandbox",
             "--disable-dev-shm-usage",
           ],
           headless:
-            true,
+            false,
         }
       );
     const page =
@@ -25,7 +41,7 @@ async function generatePDF(
       html,
       {
         waitUntil:
-          "networkidle",
+          "networkidle0",
       }
     );
 
@@ -34,7 +50,7 @@ async function generatePDF(
       await page.pdf(
         {
           format:
-            "A4",
+            "a4",
           width:
             "8.27in",
           height:
