@@ -51,176 +51,315 @@ const Template1 =
     return (
       <div
         style={{
+          width:
+            "8.27in",
           display:
             "flex",
+          flexDirection:
+            "column",
+          padding:
+            "0 0.5in",
+          fontFamily:
+            '"Times New Roman", Times, serif',
         }}
       >
-        <div
+        <p
           style={{
-            margin:
-              "auto",
-            width:
-              "8.27in",
-            display:
-              "flex",
-            flexDirection:
-              "column",
-            paddingTop:
-              "0.7in",
-            padding:
-              "0.5in",
-            fontFamily:
-              '"Times New Roman", Times, serif',
+            textAlign:
+              "center",
+            fontSize:
+              "20px",
+            textTransform:
+              "uppercase",
+            fontWeight:
+              "bold",
           }}
         >
-          <p
-            style={{
-              textAlign:
-                "center",
-              fontSize:
-                "1rem",
-              textTransform:
-                "uppercase",
-              fontWeight:
-                "bold",
-            }}
-          >
-            {
-              personalDetails?.name
-            }
-          </p>
-          <div
-            style={{
-              lineHeight:
-                "1.2",
-              display:
-                "flex",
-              alignItems:
-                "center",
-              justifyContent:
-                "center",
-              fontSize:
-                "0.6875rem",
-            }}
-          >
-            {personalInfo.length >
-              0 && (
-              <span>
-                {personalInfo.join(
-                  " | "
-                )}
-              </span>
-            )}
-          </div>
-          {roleDetails?.summary &&
-            roleDetails?.summary
-              .replace(
-                /(<([^>]+)>)/gi,
-                ""
-              )
-              .trim() !==
-              "" && (
-              <div
-                style={{
-                  display:
-                    "flex",
-                  flexDirection:
-                    "column",
-                  fontSize:
-                    "0.6875rem",
-                  marginTop:
-                    "0.5rem",
-                }}
-              >
-                <p
-                  style={{
-                    fontWeight:
-                      "bold",
-                    textTransform:
-                      "uppercase",
-                    borderBottom:
-                      "1px solid black",
-                  }}
-                >
-                  Summary
-                </p>
-                <div
-                  style={{
-                    maxWidth:
-                      "100%",
-                  }}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      roleDetails?.summary,
-                  }}
-                />
-              </div>
-            )}
-
-          {Education
-            ?.data
-            ?.length >
+          {
+            personalDetails?.name
+          }
+        </p>
+        <div
+          style={{
+            lineHeight:
+              "1.2",
+            display:
+              "flex",
+            alignItems:
+              "center",
+            justifyContent:
+              "center",
+            fontSize:
+              "11px",
+          }}
+        >
+          {personalInfo.length >
             0 && (
+            <span>
+              {personalInfo.join(
+                " | "
+              )}
+            </span>
+          )}
+        </div>
+        {roleDetails?.summary &&
+          roleDetails?.summary
+            .replace(
+              /(<([^>]+)>)/gi,
+              ""
+            )
+            .trim() !==
+            "" && (
             <div
               style={{
                 display:
                   "flex",
                 flexDirection:
                   "column",
+                fontSize:
+                  "11px",
                 marginTop:
                   "0.5rem",
               }}
             >
               <p
                 style={{
-                  fontSize:
-                    "0.6875rem",
                   fontWeight:
                     "bold",
                   textTransform:
                     "uppercase",
                   borderBottom:
                     "1px solid black",
-                  marginBottom:
-                    "0.625rem",
                 }}
               >
-                {Education?.fieldName ||
-                  "Education"}
+                Summary
               </p>
-              {Education?.data?.map(
-                (
-                  education,
-                  index
-                ) => (
+              <div
+                style={{
+                  maxWidth:
+                    "100%",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    roleDetails?.summary,
+                }}
+              />
+            </div>
+          )}
+
+        {Education
+          ?.data
+          ?.length >
+          0 && (
+          <div
+            style={{
+              display:
+                "flex",
+              flexDirection:
+                "column",
+              marginTop:
+                "0.5rem",
+            }}
+          >
+            <p
+              style={{
+                fontSize:
+                  "11px",
+                fontWeight:
+                  "bold",
+                textTransform:
+                  "uppercase",
+                borderBottom:
+                  "1px solid black",
+                marginBottom:
+                  "0.625rem",
+              }}
+            >
+              {Education?.fieldName ||
+                "Education"}
+            </p>
+            {Education?.data?.map(
+              (
+                education,
+                index
+              ) => (
+                <div
+                  key={
+                    index
+                  }
+                  style={{
+                    display:
+                      "flex",
+                    paddingLeft:
+                      "1.25rem",
+                    flexDirection:
+                      "column",
+                    fontSize:
+                      "11px",
+                    lineHeight:
+                      "1.2",
+                  }}
+                >
                   <div
-                    key={
-                      index
-                    }
                     style={{
                       display:
                         "flex",
-                      paddingLeft:
-                        "1.25rem",
-                      flexDirection:
-                        "column",
-                      fontSize:
-                        "0.6875rem",
-                      lineHeight:
-                        "1.2",
+                      justifyContent:
+                        "space-between",
+                      alignItems:
+                        "center",
+                    }}
+                  >
+                    <span>
+                      <span
+                        style={{
+                          fontWeight:
+                            "bold",
+                        }}
+                      >
+                        {
+                          education?.Institute
+                        }
+                      </span>
+                      ,&nbsp;
+                      <span>
+                        {
+                          education?.location
+                        }
+                      </span>
+                    </span>
+                    <span
+                      style={{
+                        whiteSpace:
+                          "nowrap",
+                      }}
+                    >
+                      {formatDate(
+                        education?.start_date
+                      )}{" "}
+                      -{" "}
+                      {education?.end_date
+                        ? formatDate(
+                            education?.end_date
+                          )
+                        : "Present"}
+                    </span>
+                  </div>
+                  <div>
+                    {
+                      education?.degree
+                    }
+                  </div>
+                  {education?.description && (
+                    <div
+                      style={{
+                        maxWidth:
+                          "100%",
+                      }}
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          education.description,
+                      }}
+                    />
+                  )}
+                  {index +
+                    1 !==
+                    Education
+                      ?.data
+                      ?.length && (
+                    <br />
+                  )}
+                </div>
+              )
+            )}
+          </div>
+        )}
+        {WorkExperience
+          ?.data
+          ?.length >
+          0 && (
+          <div
+            style={{
+              display:
+                "flex",
+              flexDirection:
+                "column",
+              marginTop:
+                "0.5rem",
+            }}
+          >
+            <p
+              style={{
+                fontSize:
+                  "11px",
+                fontWeight:
+                  "bold",
+                textTransform:
+                  "uppercase",
+                borderBottom:
+                  "1px solid black",
+                marginBottom:
+                  "0.625rem",
+              }}
+            >
+              {WorkExperience?.fieldName ||
+                "Work Experience"}
+            </p>
+            {WorkExperience?.data?.map(
+              (
+                work,
+                index
+              ) => (
+                <div
+                  key={
+                    index
+                  }
+                  style={{
+                    display:
+                      "flex",
+                    paddingLeft:
+                      "1.25rem",
+                    flexDirection:
+                      "column",
+                    fontSize:
+                      "11px",
+                    lineHeight:
+                      "1.2",
+                  }}
+                >
+                  <div
+                    style={{
+                      display:
+                        "flex",
+                      justifyContent:
+                        "space-between",
+                      alignItems:
+                        "flex-start",
                     }}
                   >
                     <div
                       style={{
                         display:
                           "flex",
-                        justifyContent:
-                          "space-between",
+                        flexDirection:
+                          "column",
                         alignItems:
-                          "center",
+                          "flex-start",
+                        gap: "0.5rem",
                       }}
                     >
                       <span>
+                        <span
+                          style={{
+                            fontStyle:
+                              "italic",
+                          }}
+                        >
+                          {
+                            work?.role
+                          }
+                        </span>
+                        ,&nbsp;
                         <span
                           style={{
                             fontWeight:
@@ -228,80 +367,80 @@ const Template1 =
                           }}
                         >
                           {
-                            education?.Institute
+                            work?.company_name
                           }
                         </span>
                         ,&nbsp;
                         <span>
                           {
-                            education?.location
+                            work?.location
                           }
                         </span>
                       </span>
-                      <span
-                        style={{
-                          whiteSpace:
-                            "nowrap",
-                        }}
-                      >
-                        {formatDate(
-                          education?.start_date
-                        )}{" "}
-                        -{" "}
-                        {education?.end_date
-                          ? formatDate(
-                              education?.end_date
-                            )
-                          : "Present"}
-                      </span>
+                      {work?.description && (
+                        <div
+                          style={{
+                            maxWidth:
+                              "6in",
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              work.description,
+                          }}
+                        />
+                      )}
                     </div>
-                    <div>
-                      {
-                        education?.degree
-                      }
-                    </div>
-                    {education?.description && (
-                      <div
-                        style={{
-                          maxWidth:
-                            "100%",
-                        }}
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            education.description,
-                        }}
-                      />
-                    )}
-                    {index +
-                      1 !==
-                      Education
-                        ?.data
-                        ?.length && (
-                      <br />
-                    )}
+                    <span
+                      style={{
+                        whiteSpace:
+                          "nowrap",
+                      }}
+                    >
+                      {formatDate(
+                        work?.start_date
+                      )}{" "}
+                      -{" "}
+                      {work?.end_date
+                        ? formatDate(
+                            work?.end_date
+                          )
+                        : "Present"}
+                    </span>
                   </div>
-                )
-              )}
-            </div>
-          )}
-          {WorkExperience
-            ?.data
-            ?.length >
-            0 && (
+                  {index +
+                    1 !==
+                    WorkExperience
+                      ?.data
+                      ?.length && (
+                    <br />
+                  )}
+                </div>
+              )
+            )}
+          </div>
+        )}
+        {Skills?.data &&
+          Skills?.data
+            .replace(
+              /(<([^>]+)>)/gi,
+              ""
+            )
+            .trim() !==
+            "" && (
             <div
               style={{
                 display:
                   "flex",
                 flexDirection:
                   "column",
+                fontSize:
+                  "11px",
                 marginTop:
                   "0.5rem",
               }}
             >
               <p
                 style={{
-                  fontSize:
-                    "0.6875rem",
                   fontWeight:
                     "bold",
                   textTransform:
@@ -312,145 +451,45 @@ const Template1 =
                     "0.625rem",
                 }}
               >
-                {WorkExperience?.fieldName ||
-                  "Work Experience"}
+                Skills
               </p>
-              {WorkExperience?.data?.map(
-                (
-                  work,
-                  index
-                ) => (
-                  <div
-                    key={
-                      index
-                    }
-                    style={{
-                      display:
-                        "flex",
-                      paddingLeft:
-                        "1.25rem",
-                      flexDirection:
-                        "column",
-                      fontSize:
-                        "0.6875rem",
-                      lineHeight:
-                        "1.2",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display:
-                          "flex",
-                        justifyContent:
-                          "space-between",
-                        alignItems:
-                          "flex-start",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display:
-                            "flex",
-                          flexDirection:
-                            "column",
-                          alignItems:
-                            "flex-start",
-                          gap: "0.5rem",
-                        }}
-                      >
-                        <span>
-                          <span
-                            style={{
-                              fontStyle:
-                                "italic",
-                            }}
-                          >
-                            {
-                              work?.role
-                            }
-                          </span>
-                          ,&nbsp;
-                          <span
-                            style={{
-                              fontWeight:
-                                "bold",
-                            }}
-                          >
-                            {
-                              work?.company_name
-                            }
-                          </span>
-                          ,&nbsp;
-                          <span>
-                            {
-                              work?.location
-                            }
-                          </span>
-                        </span>
-                        {work?.description && (
-                          <div
-                            style={{
-                              maxWidth:
-                                "6in",
-                            }}
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                work.description,
-                            }}
-                          />
-                        )}
-                      </div>
-                      <span
-                        style={{
-                          whiteSpace:
-                            "nowrap",
-                        }}
-                      >
-                        {formatDate(
-                          work?.start_date
-                        )}{" "}
-                        -{" "}
-                        {work?.end_date
-                          ? formatDate(
-                              work?.end_date
-                            )
-                          : "Present"}
-                      </span>
-                    </div>
-                    {index +
-                      1 !==
-                      WorkExperience
-                        ?.data
-                        ?.length && (
-                      <br />
-                    )}
-                  </div>
-                )
-              )}
+              <div
+                style={{
+                  paddingLeft:
+                    "1.25rem",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    Skills?.data,
+                }}
+              />
             </div>
           )}
-          {Skills?.data &&
-            Skills?.data
-              .replace(
-                /(<([^>]+)>)/gi,
-                ""
-              )
-              .trim() !==
-              "" && (
+        {CustomField &&
+          CustomField?.length >
+            0 &&
+          CustomField?.map(
+            (
+              custom,
+              index
+            ) => (
               <div
+                key={
+                  index
+                }
                 style={{
                   display:
                     "flex",
                   flexDirection:
                     "column",
-                  fontSize:
-                    "0.6875rem",
                   marginTop:
                     "0.5rem",
                 }}
               >
                 <p
                   style={{
+                    fontSize:
+                      "11px",
                     fontWeight:
                       "bold",
                     textTransform:
@@ -461,126 +500,76 @@ const Template1 =
                       "0.625rem",
                   }}
                 >
-                  Skills
-                </p>
-                <div
-                  style={{
-                    paddingLeft:
-                      "1.25rem",
-                  }}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      Skills?.data,
-                  }}
-                />
-              </div>
-            )}
-          {CustomField &&
-            CustomField?.length >
-              0 &&
-            CustomField?.map(
-              (
-                custom,
-                index
-              ) => (
-                <div
-                  key={
-                    index
+                  {
+                    custom?.fieldName
                   }
-                  style={{
-                    display:
-                      "flex",
-                    flexDirection:
-                      "column",
-                    marginTop:
-                      "0.5rem",
-                  }}
-                >
-                  <p
-                    style={{
-                      fontSize:
-                        "0.6875rem",
-                      fontWeight:
-                        "bold",
-                      textTransform:
-                        "uppercase",
-                      borderBottom:
-                        "1px solid black",
-                      marginBottom:
-                        "0.625rem",
-                    }}
-                  >
-                    {
-                      custom?.fieldName
-                    }
-                  </p>
-                  {custom?.fields?.map(
-                    (
-                      customData,
-                      idx
-                    ) => (
-                      <div
-                        key={
-                          idx
-                        }
-                        style={{
-                          display:
-                            "flex",
-                          paddingLeft:
-                            "1.25rem",
-                          flexDirection:
-                            "column",
-                          fontSize:
-                            "0.6875rem",
-                          lineHeight:
-                            "1.2",
-                        }}
-                      >
-                        <span>
-                          <span
-                            style={{
-                              fontWeight:
-                                "bold",
-                            }}
-                          >
-                            {
-                              customData?.header
-                            }
-                          </span>
-                          ,&nbsp;
-                          <span>
-                            {
-                              customData?.subHeader
-                            }
-                          </span>
+                </p>
+                {custom?.fields?.map(
+                  (
+                    customData,
+                    idx
+                  ) => (
+                    <div
+                      key={
+                        idx
+                      }
+                      style={{
+                        display:
+                          "flex",
+                        paddingLeft:
+                          "1.25rem",
+                        flexDirection:
+                          "column",
+                        fontSize:
+                          "11px",
+                        lineHeight:
+                          "1.2",
+                      }}
+                    >
+                      <span>
+                        <span
+                          style={{
+                            fontWeight:
+                              "bold",
+                          }}
+                        >
+                          {
+                            customData?.header
+                          }
                         </span>
+                        ,&nbsp;
+                        <span>
+                          {
+                            customData?.subHeader
+                          }
+                        </span>
+                      </span>
 
-                        {customData?.description && (
-                          <div
-                            style={{
-                              maxWidth:
-                                "100%",
-                            }}
-                            dangerouslySetInnerHTML={{
-                              __html:
-                                customData.description,
-                            }}
-                          />
-                        )}
-                        {idx +
-                          1 !==
-                          custom
-                            ?.fields
-                            ?.length && (
-                          <br />
-                        )}
-                      </div>
-                    )
-                  )}
-                </div>
-              )
-            )}
-        </div>
+                      {customData?.description && (
+                        <div
+                          style={{
+                            maxWidth:
+                              "100%",
+                          }}
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              customData.description,
+                          }}
+                        />
+                      )}
+                      {idx +
+                        1 !==
+                        custom
+                          ?.fields
+                          ?.length && (
+                        <br />
+                      )}
+                    </div>
+                  )
+                )}
+              </div>
+            )
+          )}
       </div>
     );
   };
