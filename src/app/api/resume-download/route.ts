@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import chrome from "html-pdf-chrome";
+import * as chrome from "html-pdf-chrome";
 
 export async function POST(
   req: Request
