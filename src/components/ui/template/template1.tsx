@@ -57,8 +57,7 @@ const Template1 =
             "flex",
           flexDirection:
             "column",
-          padding:
-            "0 0.5in",
+          padding: 0,
           fontFamily:
             '"Times New Roman", Times, serif',
         }}

@@ -41,45 +41,31 @@ const DashBoardComponent =
               }
             />
           );
+
+        // Show loading indicator
         setIsDownloading(
           true
         );
+
         try {
+          // Send the HTML content to the backend to generate the PDF
           const response =
-            await fetch(
-              "/api/resume-download",
+            await axios.post(
+              "/api/resume-download", // Replace with your correct API route
               {
-                method:
-                  "POST",
-                headers:
-                  {
-                    "Content-Type":
-                      "application/json",
-                  },
-                body: JSON.stringify(
-                  {
-                    html: template,
-                  }
-                ),
-              }
+                html: template,
+              },
+              {
+                responseType:
+                  "blob",
+              } // Expect a Blob response (PDF file)
             );
 
-          if (
-            !response.ok
-          ) {
-            throw new Error(
-              "Sorry Failed to generate PDF "
-            );
-          }
-
-          const blob =
-            await response.blob();
+          // Create a download link for the PDF
           const url =
-            URL.createObjectURL(
-              blob
+            window.URL.createObjectURL(
+              response.data
             );
-
-          // Download the PDF
           const link =
             document.createElement(
               "a"
@@ -89,7 +75,7 @@ const DashBoardComponent =
           link.download = `${
             resume?.resumeName ||
             "resume"
-          }.pdf`;
+          }.pdf`; // Provide default filename if none exists
           link.click();
 
           // Revoke the object URL to free memory
@@ -98,13 +84,13 @@ const DashBoardComponent =
           );
         } catch (error) {
           console.error(
-            "Error app generating PDF:",
+            "Error generating PDF:",
             error
           );
         } finally {
           setIsDownloading(
             false
-          );
+          ); // Hide loading indicator
         }
       };
     const handleDelete =

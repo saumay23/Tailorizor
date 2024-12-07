@@ -1,16 +1,17 @@
 import { NextResponse } from "next/server";
-import * as chrome from "html-pdf-chrome";
+import axios from "axios";
 
 export async function POST(
   req: Request
 ) {
   try {
-    // Parse incoming HTML content
+    // Parse incoming request body
     const {
       html,
     } =
       await req.json();
 
+    // Validate the HTML content
     if (
       !html ||
       typeof html !==
@@ -26,31 +27,56 @@ export async function POST(
         }
       );
     }
-    const htmlParser = `<html><head><style>body{margin: 0; padding : 0; width:
-      "8.27in"; height:11.7in; }</style></head><body>${html}</body></html>`;
-    // Define PDF options
-    console.log(
-      htmlParser
-    );
-
-    // Generate the PDF using html-pdf-chrome
-    const pdfBuffer =
-      await chrome.create(
-        htmlParser
-      );
-    const pdfBlob =
-      new Blob(
-        [
-          pdfBuffer.toBuffer(),
-        ],
+    if (
+      !process
+        .env
+        .BACKEND_URL
+    ) {
+      return NextResponse.json(
         {
-          type: "application/pdf",
+          error:
+            "Invalid Backend URL ",
+        },
+        {
+          status: 400,
         }
       );
+    }
 
-    // Return the PDF buffer as a response
+    // Add styling and wrap HTML content in a complete document
+    const htmlParser = `
+      <html>
+        <head>
+          <style>
+            body {
+              margin: 0;
+              padding: 0;
+              width: 8.27in;
+              height: 11.7in;
+            }
+          </style>
+        </head>
+        <body>${html}</body>
+      </html>
+    `;
+
+    // Call the Python backend API to generate the PDF
+
+    const response =
+      await axios.post(
+        `${process.env.BACKEND_URL}/generate-pdf`,
+        {
+          html: htmlParser,
+        },
+        {
+          responseType:
+            "arraybuffer",
+        } // Receive the response as binary data
+      );
+
+    // Return the PDF data as the response
     return new NextResponse(
-      pdfBlob,
+      response.data,
       {
         status: 200,
         headers:
@@ -58,19 +84,33 @@ export async function POST(
             "Content-Type":
               "application/pdf",
             "Content-Disposition":
-              'attachment; filename="myPDF.pdf"',
+              "attachment; filename=document.pdf",
           },
       }
     );
-  } catch (error) {
-    console.error(
-      "Error processing request:",
-      error
-    );
+  } catch (error: unknown) {
+    // Handle errors during API communication or PDF generation
+    if (
+      axios.isAxiosError(
+        error
+      )
+    ) {
+      console.error(
+        "Axios error:",
+        error.message
+      );
+    } else {
+      console.error(
+        "Unexpected error:",
+        error
+      );
+    }
+
+    // Return an error response
     return NextResponse.json(
       {
         error:
-          "Error processing the request",
+          "Failed to generate the PDF",
       },
       {
         status: 500,
