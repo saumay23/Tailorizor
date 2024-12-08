@@ -23,6 +23,7 @@
 - **Tailwind CSS**: Utility-first CSS framework for responsive designs.
 - **MongoDB**: NoSQL database for secure and scalable data management.
 - **Google APIs**: For secure authentication and integrations.
+- **Together AI**: For getting the resume based on job description
 
 ---
 
@@ -33,6 +34,7 @@
 - Node.js (v14 or higher)
 - MongoDB (local or cloud instance)
 - Google API credentials for OAuth
+- env variables for google auth, together ai BACKEND_URL="https://tailorizor-backend.up.railway.app"
 
 ### Steps
 
