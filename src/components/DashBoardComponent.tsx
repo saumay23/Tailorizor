@@ -24,14 +24,18 @@ const DashBoardComponent =
       isDownloading,
       setIsDownloading,
     ] =
-      useState<boolean>(
-        false
+      useState<
+        | number
+        | null
+      >(
+        null
       );
     const router =
       useRouter();
     const downloadResume =
       async (
-        resume: ResumeType
+        resume: ResumeType,
+        index: number
       ) => {
         const template =
           renderToStaticMarkup(
@@ -44,7 +48,7 @@ const DashBoardComponent =
 
         // Show loading indicator
         setIsDownloading(
-          true
+          index
         );
 
         try {
@@ -89,7 +93,7 @@ const DashBoardComponent =
           );
         } finally {
           setIsDownloading(
-            false
+            null
           ); // Hide loading indicator
         }
       };
@@ -156,7 +160,8 @@ const DashBoardComponent =
                         resume.resumeName
                       }
                     </p>
-                    {isDownloading ? (
+                    {index ===
+                    isDownloading ? (
                       <Loading
                         size={
                           25
@@ -170,7 +175,8 @@ const DashBoardComponent =
                         className="w-5 h-5  cursor-pointer"
                         onClick={() => {
                           downloadResume(
-                            resume
+                            resume,
+                            index
                           );
                         }}
                       />

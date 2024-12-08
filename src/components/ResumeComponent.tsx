@@ -54,11 +54,14 @@ const ResumeComponent =
                   data.jobDescription,
               }
             );
+          console.log(
+            JSON.parse(
+              req.data
+            )
+          );
           setGeneratedResumeData(
             JSON.parse(
-              req
-                .data
-                .modifiedResume
+              req.data
             )
           );
         } catch (error) {

@@ -55,7 +55,12 @@ const GeneratedResumeForm =
         {
           mode: "all",
           defaultValues:
-            data,
+            {
+              ...data,
+              CustomField:
+                data?.CustomField ||
+                [],
+            },
           resolver:
             yupResolver(
               schema
@@ -364,7 +369,7 @@ const GeneratedResumeForm =
                 </div>
               </FormProvider>
             </div>
-            <div className="hidden py-[0.5in] md:block md:w-1/4 max-w-[9in] overflow-scroll mx-2 border box-border scrollbar-none flex-1">
+            <div className="hidden py-[0.5in]  md:block md:w-1/4 max-w-[9in] overflow-scroll mx-2 border box-border scrollbar-none flex-1">
               <Template1
                 data={methods?.watch()}
               />
