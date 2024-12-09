@@ -7,6 +7,7 @@ import React, {
 import {
   AiFillFilePdf,
   AiOutlineDownload,
+  AiOutlineEye,
 } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import Template1 from "./ui/template/template1";
@@ -16,8 +17,10 @@ import { useRouter } from "next/navigation";
 const DashBoardComponent =
   ({
     resumes,
+    resumeIDs,
   }: {
     resumes: ResumeType[];
+    resumeIDs: string[];
   }) => {
     const [
       isDownloading,
@@ -31,6 +34,9 @@ const DashBoardComponent =
       );
     const router =
       useRouter();
+    console.log(
+      resumeIDs
+    );
     const downloadResume =
       async (
         resume: ResumeType,
@@ -108,7 +114,7 @@ const DashBoardComponent =
           router.refresh();
         } catch (error) {
           console.error(
-            "Failed to delete  PDF:",
+            "Failed to delete PDF:",
             error
           );
         }
@@ -147,6 +153,14 @@ const DashBoardComponent =
 
                   {/* Actions (View, Download, Delete) */}
                   <div className="flex justify-center items-center w-[min(20%,200px)] space-x-3">
+                    <AiOutlineEye
+                      className="w-5 h-5 text-blue-500 cursor-pointer"
+                      onClick={() => {
+                        router.push(
+                          `/viewResume?id=${resumeIDs[index]}`
+                        );
+                      }}
+                    />
                     {isDownloading ===
                     index ? null : (
                       <AiOutlineDownload

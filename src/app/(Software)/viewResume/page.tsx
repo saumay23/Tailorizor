@@ -2,24 +2,32 @@ import { auth } from "@/auth";
 import { connectToDatabase } from "@/lib/db";
 import { ResumeType } from "@/lib/types/resume";
 import { redirect } from "next/navigation";
-import React from "react";
-import DashBoardComponent from "@/components/DashBoardComponent";
+import Template1 from "@/components/ui/template/template1";
+import { ObjectId } from "mongodb";
 
-const Dashboard =
-  async () => {
-    let resumeIds:
-      | string[]
-      | null =
-      null;
-    let resumeProp:
-      | ResumeType[]
-      | null =
+const ViewResume =
+  async ({
+    searchParams,
+  }: {
+    searchParams: Promise<{
+      [
+        key: string
+      ]:
+        | string
+        | string[]
+        | undefined;
+    }>;
+  }) => {
+    let resumeProp: ResumeType | null =
       null;
     let redirectURL =
       "";
+
+    // Authenticate the user
     const session =
       await auth();
 
+    // If no session, redirect to login page
     if (
       !session
     ) {
@@ -32,14 +40,21 @@ const Dashboard =
           session
             ?.user
             ?.id;
+        const resumeId =
+          (
+            await searchParams
+          )
+            .id as string;
         if (
-          !userId
+          !userId ||
+          !resumeId
         ) {
           throw new Error(
-            "User ID is missing from the session"
+            "User ID is missing from the session or id is Missing"
           );
         }
 
+        // Connect to the database and fetch the resume
         const db =
           await connectToDatabase();
         const resume =
@@ -47,40 +62,23 @@ const Dashboard =
             .collection<ResumeType>(
               "Resume"
             )
-            .find(
+            .findOne(
               {
-                user_id:
-                  userId,
+                _id: new ObjectId(
+                  resumeId
+                ),
               }
-            )
-            .toArray();
+            );
 
         if (
-          resume?.length ===
-          0
+          !resume
         ) {
           redirectURL =
-            "/gettingStarted";
+            "/dashboard";
         }
-        /* eslint-disable @typescript-eslint/no-unused-vars */
 
         resumeProp =
-          resume?.map(
-            ({
-              _id,
-              ...rest
-            }) =>
-              rest
-          );
-        resumeIds =
-          resume?.map(
-            ({
-              _id,
-              ...rest
-            }) =>
-              _id.toString()
-          );
-        /* eslint-enable @typescript-eslint/no-unused-vars */
+          resume;
       } catch (error) {
         console.log(
           error
@@ -93,23 +91,20 @@ const Dashboard =
         if (
           redirectURL !==
           ""
-        )
+        ) {
           redirect(
             redirectURL
           );
+        }
       }
     }
 
     return (
       <>
-        {resumeProp &&
-        resumeIds ? (
-          <div className="min-w-screen  h-[calc(100vh_-_5rem)]  scrollbar-none">
-            <DashBoardComponent
-              resumeIDs={
-                resumeIds
-              }
-              resumes={
+        {resumeProp ? (
+          <div className="min-w-screen flex justify-center h-[calc(100vh_-_5rem)] p-10 mb-10 overflow-scroll">
+            <Template1
+              data={
                 resumeProp
               }
             />
@@ -119,4 +114,4 @@ const Dashboard =
     );
   };
 
-export default Dashboard;
+export default ViewResume;
