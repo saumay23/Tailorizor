@@ -100,12 +100,6 @@ export async function POST(
               ],
           }
         );
-      console.log(
-        modifiedResume
-          ?.choices?.[0]
-          ?.message
-          ?.content
-      );
       if (
         modifiedResume
           ?.choices[0]

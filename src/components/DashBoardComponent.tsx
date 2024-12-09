@@ -7,13 +7,11 @@ import React, {
 import {
   AiFillFilePdf,
   AiOutlineDownload,
-  AiOutlineEye,
 } from "react-icons/ai";
 import { RxCross2 } from "react-icons/rx";
 import Template1 from "./ui/template/template1";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Loading from "./Loading";
 
 const DashBoardComponent =
   ({
@@ -149,15 +147,18 @@ const DashBoardComponent =
 
                   {/* Actions (View, Download, Delete) */}
                   <div className="flex justify-center items-center w-[min(20%,200px)] space-x-3">
-                    <AiOutlineDownload
-                      className="w-5 h-5 text-green-500 cursor-pointer"
-                      onClick={() => {
-                        downloadResume(
-                          resume,
-                          index
-                        );
-                      }}
-                    />
+                    {isDownloading ===
+                    index ? null : (
+                      <AiOutlineDownload
+                        className="w-5 h-5 text-green-500 cursor-pointer"
+                        onClick={() => {
+                          downloadResume(
+                            resume,
+                            index
+                          );
+                        }}
+                      />
+                    )}
                     <RxCross2
                       className={`${
                         resume.resumeName ===

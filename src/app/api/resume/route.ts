@@ -16,9 +16,7 @@ export async function POST(
       await connectToDatabase();
     const data: ResumeType =
       await req.json();
-    console.log(
-      data
-    );
+
     await db
       .collection(
         "Resume"

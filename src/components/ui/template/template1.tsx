@@ -1,11 +1,11 @@
-import { ResumeType } from "@/lib/types/resume";
+import { ProfileType } from "@/lib/types/profile";
 import React from "react";
 
 const Template1 =
   ({
     data,
   }: {
-    data: ResumeType;
+    data: ProfileType;
   }) => {
     const formatDate =
       (
