@@ -116,6 +116,9 @@ const ResumeComponent =
           {generatedResumeData ? (
             <>
               <GeneratedResumeForm
+                user_id={
+                  user_id
+                }
                 data={
                   generatedResumeData
                 }

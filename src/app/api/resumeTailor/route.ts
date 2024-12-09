@@ -55,33 +55,33 @@ export async function POST(
         );
 
       const prompt = `
-        You are an AI assistant specializing in tailoring resumes for job applications.  
-
+        You are an AI assistant specializing in tailoring resumes for job applications.
+        
         **Objective:**  
         1. Extract essential skills, qualifications, and relevant keywords from the provided job description.  
-        2. Integrate these keywords into the given resume JSON while preserving its structure and format.  
-        3. Revise sections such as "Education," "WorkExperience," "Skills," and "CustomField" to align with the priorities outlined in the job description.  
-          4. do not create any additional work experience education or custom field section rewrite the in the existing
+        2. Edit only the descriptions in the provided resume JSON to incorporate these keywords while preserving the structure and format.  
+        3. Do not create or remove any "WorkExperience," "Education," "Skills," or "CustomField" sections. Modify only the descriptions within the existing entries.  
+        4. Do not modify the LinkedIn URL field or any other non-description fields.
+        
         **Instructions:**  
-        - Update the \`resumeName\` field to include the company name or role title if explicitly mentioned in the job description.  
-        - Rewrite and enhance the "WorkExperience" and "Education" descriptions to reflect the requirements in the job description more effectively.  
-        - Avoid adding unrelated information—focus on refining the existing content.  
-        - Retain the provided JSON schema and ensure the output is a valid JSON object. Return **only** the modified resume object with updated values, incorporating the relevant keywords from the job description. The returned object should match the same format as the original resume with the updated information.
-
+        - Update the descriptions in "WorkExperience," "Education," "Skills," and "CustomField" to reflect the requirements and priorities outlined in the job description more effectively.  
+        - Avoid adding unrelated information—focus on refining the descriptions to align with the job description.  
+        - Retain the provided JSON schema and ensure the output is a valid JSON object. Return **only** the modified resume object with updated descriptions, incorporating the relevant keywords from the job description. The returned object should match the same format as the original resume with updated descriptions only.
+        
         **Input:**  
         - **Job Description:**  
           ${
             data.jobDescription
           }  
-
+        
         - **Resume JSON:**  
           ${JSON.stringify(
             resume
           )}  
-
+        
         **Output:**  
-        Return the same object format as the original resume, with the updated values incorporating keywords from the job description, and return **only** the updated object (no additional explanations).
-      `;
+        Return the same object format as the original resume, with updated descriptions incorporating keywords from the job description, and return **only** the updated object (no additional explanations).
+        `;
 
       const modifiedResume =
         await together.chat.completions.create(

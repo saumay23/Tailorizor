@@ -1,8 +1,4 @@
 "use client";
-import {
-  ProfileType,
-  schema,
-} from "@/lib/types/profile";
 import React, {
   useState,
 } from "react";
@@ -25,7 +21,10 @@ import {
 
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
-import { ResumeType } from "@/lib/types/resume";
+import {
+  ResumeSchema,
+  ResumeType,
+} from "@/lib/types/resume";
 import Loading from "./Loading";
 import PersonalDetails from "./gettingStarted/personalDetails";
 import RoleDetails from "./gettingStarted/roleDetails";
@@ -36,12 +35,15 @@ import { Input } from "./ui/input";
 import CustomSection from "./gettingStarted/customSection";
 import { Button } from "./ui/button";
 import Template1 from "./ui/template/template1";
+import { Label } from "./ui/label";
 
 const GeneratedResumeForm =
   ({
     data,
+    user_id,
   }: {
     data: ResumeType;
+    user_id: string;
   }) => {
     const [
       generate,
@@ -57,13 +59,15 @@ const GeneratedResumeForm =
           defaultValues:
             {
               ...data,
+              user_id:
+                user_id,
               CustomField:
                 data?.CustomField ||
                 [],
             },
           resolver:
             yupResolver(
-              schema
+              ResumeSchema
             ),
         }
       );
@@ -86,17 +90,36 @@ const GeneratedResumeForm =
     const router =
       useRouter();
     const handelSaveChanges: SubmitHandler<
-      ProfileType
+      ResumeType
     > = async (
       data
     ) => {
+      const payload: ResumeType =
+        {
+          resumeName:
+            data?.resumeName,
+          personalDetails:
+            data?.personalDetails,
+          roleDetails:
+            data?.roleDetails,
+          Education:
+            data?.Education,
+          WorkExperience:
+            data?.WorkExperience,
+          Skills:
+            data?.Skills,
+          user_id:
+            data?.user_id,
+          CustomField:
+            data?.CustomField,
+        };
       try {
         setGenerating(
           true
         );
         await axios.post(
           "/api/resume",
-          data
+          payload
         );
         toast.success(
           "Successful ! Navigating to the dashboard",
@@ -185,6 +208,41 @@ const GeneratedResumeForm =
                 {...methods}
               >
                 <div className="flex-1   space-y-10 ">
+                  <div className=" flex flex-col space-y-3">
+                    <div className="flex space-x-3 items-center mb-1">
+                      <Label
+                        htmlFor="fileName"
+                        className="text-xs md:text-sm font-extralight text-[#71717A] "
+                      >
+                        File
+                        Name
+                      </Label>
+                      {methods
+                        ?.formState
+                        ?.errors
+                        ?.resumeName
+                        ?.message && (
+                        <p className="text-red-500 text-xs md:text-sm font-medium">
+                          {
+                            methods
+                              ?.formState
+                              ?.errors
+                              ?.resumeName
+                              ?.message
+                          }
+                        </p>
+                      )}
+                    </div>
+                    <Input
+                      id="email"
+                      type="email"
+                      className="px-3 py-2 border text-sm border-[#DDDDDD] rounded-md outline-none w-full placeholder:text-[#DDDDDD]"
+                      placeholder="File Name"
+                      {...methods?.register(
+                        "resumeName"
+                      )}
+                    />
+                  </div>
                   <div className="flex flex-col space-y-4 ">
                     <span className="font-[family-name:var(--font-geist-sans)] md:text-xl text-lg tracking-wide underline font-medium">
                       Personal

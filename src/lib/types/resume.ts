@@ -11,7 +11,10 @@ export const ResumeSchema =
       resumeName:
         yup
           .string()
-          .nonNullable(),
+          .nonNullable()
+          .required(
+            "This is required"
+          ),
       personalDetails:
         yup.object(
           {
